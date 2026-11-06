@@ -53,7 +53,7 @@ export default function AdminDashboardPage() {
   const resolvedQuery = useRequests({ status: 'RESOLVED', page: 1, limit: 1 })
   const cancelledQuery = useRequests({ status: 'CANCELLED', page: 1, limit: 1 })
 
-  const requests = recentQuery.data?.data.requests ?? []
+  const requests = useMemo(() => recentQuery.data?.data.requests ?? [], [recentQuery.data?.data.requests])
   const total = recentQuery.data?.data.pagination.total ?? 0
   const pending = pendingQuery.data?.data.pagination.total ?? 0
   const inProgress = progressQuery.data?.data.pagination.total ?? 0
@@ -405,3 +405,4 @@ export default function AdminDashboardPage() {
     </AdminLayout>
   )
 }
+

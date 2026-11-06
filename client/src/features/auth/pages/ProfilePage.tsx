@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react'
+﻿import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
   ArrowLeft, BadgeCheck, Fingerprint, LayoutDashboard, LifeBuoy,
@@ -42,28 +42,10 @@ export default function ProfilePage() {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setName(user?.name ?? '')
-    setEmail(user?.email ?? '')
-  }, [user])
-
-  useEffect(() => {
-    if (!avatarFile) {
-      setAvatarPreview(null)
-      return
+    return () => {
+      if (avatarPreview) URL.revokeObjectURL(avatarPreview)
     }
-
-    const previewUrl = URL.createObjectURL(avatarFile)
-    setAvatarPreview(previewUrl)
-
-    return () => URL.revokeObjectURL(previewUrl)
-  }, [avatarFile])
-
-  useEffect(() => {
-    setSelectedPreset(
-      user?.avatar?.startsWith('preset:') ? user.avatar.slice(7) : '',
-    )
-  }, [user?.avatar])
-
+  }, [avatarPreview])
   const handleAvatarFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (!file) return
@@ -85,6 +67,7 @@ export default function ProfilePage() {
       return
     }
 
+    setAvatarPreview(URL.createObjectURL(file))
     setAvatarFile(file)
     setSelectedPreset('')
   }
@@ -99,6 +82,7 @@ export default function ProfilePage() {
     try {
       await uploadAvatar(avatarFile)
       setAvatarFile(null)
+      setAvatarPreview(null)
       if (fileInputRef.current) fileInputRef.current.value = ''
       setAvatarMessage('Your profile picture has been updated.')
     } catch (err) {
@@ -114,6 +98,7 @@ export default function ProfilePage() {
   const handlePresetSelect = async (preset: string) => {
     setSelectedPreset(preset)
     setAvatarFile(null)
+    setAvatarPreview(null)
     if (fileInputRef.current) fileInputRef.current.value = ''
     setIsAvatarSaving(true)
     setAvatarError('')
@@ -365,6 +350,7 @@ export default function ProfilePage() {
                         type="button"
                         onClick={() => {
                           setAvatarFile(null)
+                          setAvatarPreview(null)
                           if (fileInputRef.current) fileInputRef.current.value = ''
                         }}
                         disabled={isAvatarSaving}
@@ -375,7 +361,7 @@ export default function ProfilePage() {
                     )}
                   </div>
 
-                  <p className="mt-3 text-xs text-slate-400">JPG, PNG or WEBP · Maximum file size: 2 MB</p>
+                  <p className="mt-3 text-xs text-slate-400">JPG, PNG or WEBP Â· Maximum file size: 2 MB</p>
 
                   <div className="mt-7">
                     <p className="mb-3 text-sm font-semibold text-slate-700">Choose an illustrated avatar</p>
@@ -502,3 +488,6 @@ export default function ProfilePage() {
     </div>
   )
 }
+
+
+

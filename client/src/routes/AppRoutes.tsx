@@ -14,6 +14,7 @@ import PreferencesPage from '../features/preferences/pages/PreferencesPage'
 import SupportCentrePage from '../features/support/pages/SupportCentrePage'
 import SupportTicketDetailsPage from '../features/support/pages/SupportTicketDetailsPage'
 import AdminSupportPage from '../features/admin/pages/AdminSupportPage'
+import AdminUsersPage from '../features/admin/pages/AdminUsersPage'
 
 export default function AppRoutes() {
   return (
@@ -38,7 +39,7 @@ export default function AppRoutes() {
         <Route path="/admin" element={<AdminDashboardPage />} />
         <Route path="/admin/requests" element={<AdminRequestsPage />} />
         <Route path="/admin/profile" element={<AdminProfilePage />} />
-        <Route path="/admin/support" element={<AdminSupportPage />} />
+        <Route path="/admin/support" element={<AdminSupportPage />} />`r`n        <Route path="/admin/users" element={<AdminUsersPage />} />
         <Route path="/admin/support/:id" element={<SupportTicketDetailsPage />} />
       </Route>
 
@@ -46,3 +47,4 @@ export default function AppRoutes() {
     </Routes>
   )
 }
+

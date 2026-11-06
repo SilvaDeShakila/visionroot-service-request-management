@@ -1,6 +1,5 @@
-import {
+﻿import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useState,
@@ -34,20 +33,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
-  const refreshUser = useCallback(async () => {
-    try {
-      const response = await authService.getCurrentUser()
-      setUser(response.data.user)
-    } catch {
-      setUser(null)
-    } finally {
-      setIsLoading(false)
+  useEffect(() => {
+    let active = true
+
+    authService.getCurrentUser()
+      .then((response) => {
+        if (active) {
+          setUser(response.data.user)
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setUser(null)
+        }
+      })
+      .finally(() => {
+        if (active) {
+          setIsLoading(false)
+        }
+      })
+
+    return () => {
+      active = false
     }
   }, [])
-
-  useEffect(() => {
-    void refreshUser()
-  }, [refreshUser])
 
   const login = async (data: LoginData): Promise<AuthUser> => {
     const response = await authService.login(data)
@@ -106,6 +115,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/* eslint-disable react-refresh/only-export-components */
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext)
 
@@ -115,3 +125,4 @@ export function useAuth(): AuthContextValue {
 
   return context
 }
+

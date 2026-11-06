@@ -1,5 +1,5 @@
 ﻿import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useAuth } from '../../auth/auth-context'
@@ -53,7 +53,7 @@ export default function EditRequestPage() {
     register,
     handleSubmit,
     reset,
-    watch,
+    control,
     formState: { errors },
   } = useForm<CreateRequestFormValues>({
     resolver: zodResolver(createRequestSchema),
@@ -76,8 +76,8 @@ export default function EditRequestPage() {
     }
   }, [request, reset])
 
-  const selectedCategory = watch('category')
-  const selectedPriority = watch('priority')
+  const selectedCategory = useWatch({ control, name: 'category' })
+  const selectedPriority = useWatch({ control, name: 'priority' })
 
   const onSubmit = async (values: CreateRequestFormValues) => {
     try {
@@ -382,3 +382,4 @@ export default function EditRequestPage() {
     </div>
   )
 }
+

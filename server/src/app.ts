@@ -1,9 +1,10 @@
-import express from 'express'
+﻿import express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
 import cookieParser from 'cookie-parser'
 import path from 'node:path'
 import { rateLimit } from 'express-rate-limit'
+import adminUserRouter from './routes/admin-user.routes.js'
 import { env } from './config/env.js'
 import authRouter from './routes/auth.routes.js'
 import serviceRequestRouter from './routes/service-request.routes.js'
@@ -35,7 +36,7 @@ app.use(
   '/api',
   rateLimit({
     windowMs: 15 * 60 * 1000,
-    limit: 100,
+    limit: env.NODE_ENV === 'development' ? 1000 : 100,
     standardHeaders: 'draft-8',
     legacyHeaders: false,
     message: {
@@ -62,6 +63,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/requests', serviceRequestRouter)
 app.use('/api/v1/preferences', preferencesRouter)
 app.use('/api/v1/support', supportTicketRouter)
+app.use('/api/v1/users', adminUserRouter)
 
 app.get('/api/v1/health', (_req, res) => {
   res.status(200).json({
@@ -75,5 +77,6 @@ app.use(notFoundHandler)
 app.use(errorHandler)
 
 export default app
+
 
 

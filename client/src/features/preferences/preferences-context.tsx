@@ -1,4 +1,4 @@
-import {
+﻿import {
   createContext,
   useCallback,
   useContext,
@@ -82,7 +82,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     return () => {
       active = false
     }
-  }, [user?.id, isAuthLoading])
+  }, [user, isAuthLoading])
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences))
@@ -147,6 +147,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/* eslint-disable react-refresh/only-export-components */
 export function usePreferences(): PreferencesContextValue {
   const context = useContext(PreferencesContext)
 
@@ -156,3 +157,4 @@ export function usePreferences(): PreferencesContextValue {
 
   return context
 }
+
