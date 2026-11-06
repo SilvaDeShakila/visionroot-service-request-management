@@ -1,24 +1,92 @@
-﻿# VisionRoot Service Request Management System
-
-
+# VisionRoot – Service Request Management System
 
 <p align="center">
-
- **Full-Stack Web Application**
-
-
-
- Software Engineering Intern Technical Assignment
-
-
-
- **VisionRoot (Pvt) Ltd**
-
+  <strong>A Full-Stack Service Request Management Platform</strong>
+  <br />
+  Software Engineering Intern Technical Assignment
+  <br />
+  <strong>VisionRoot (Pvt) Ltd</strong>
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-Language-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Express.js-API-000000?style=for-the-badge&logo=express&logoColor=white" alt="Express.js" />
+  <img src="https://img.shields.io/badge/MongoDB-Database-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB" />
+</p>
 
+<p align="center">
+  <a href="docs/api-documentation.md">API Documentation</a> •
+  <a href="docs/database-schema.md">Database Schema</a> •
+  <a href="#installation-and-setup">Installation Guide</a>
+</p>
 
 ---
+
+## Application Preview
+
+<p align="center">
+  <img src="docs/screenshots/user-dashboard.png" alt="VisionRoot User Dashboard" width="90%" />
+</p>
+
+<p align="center">
+  <em>A centralized platform for submitting, tracking, and managing customer service requests.</em>
+</p>
+
+## About the Project
+
+VisionRoot Service Request Management System is a full-stack web application designed to streamline customer service request management.
+
+Customers can register, submit service requests, track progress, manage eligible requests, and communicate with the support team. Administrators can manage requests across users, monitor service activities, update request statuses, and respond to support tickets.
+
+### Key Highlights
+
+- **User Management** – Registration, authentication, profile management, and role-based access.
+- **Service Requests** – Create, view, edit, cancel, and track service requests.
+- **Admin Dashboard** – Centralized request management with search, filtering, sorting, and pagination.
+- **Support Centre** – Customer support tickets and two-way communication.
+- **User Preferences** – Profile and application preference management.
+- **Security** – Protected API endpoints, validation, authentication, and authorization.
+- **Automated Testing** – Backend unit and integration test coverage.
+
+## Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| Frontend | React, TypeScript, Vite |
+| Backend | Node.js, Express.js, TypeScript |
+| Database | MongoDB, Mongoose |
+| Authentication | JWT, HTTP-only Cookies |
+| Testing | Jest, Supertest |
+| Styling | Tailwind CSS |
+
+## Screenshots
+
+### User Interface
+
+| Login | User Dashboard |
+|---|---|
+| ![Login](docs/screenshots/login.png) | ![User Dashboard](docs/screenshots/user-dashboard.png) |
+
+| Create Request | Request Details |
+|---|---|
+| ![Create Request](docs/screenshots/create-request.png) | ![Request Details](docs/screenshots/request-details.png) |
+
+### Administration and Support
+
+| Admin Dashboard | Support Centre |
+|---|---|
+| ![Admin Dashboard](docs/screenshots/admin-dashboard.png) | ![Support Centre](docs/screenshots/support-centre.png) |
+
+### User Preferences
+
+<p align="center">
+  <img src="docs/screenshots/preferences.png" alt="User Preferences" width="85%" />
+</p>
+
+---
+
 
 
 
