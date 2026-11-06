@@ -39,7 +39,8 @@ export default function AppRoutes() {
         <Route path="/admin" element={<AdminDashboardPage />} />
         <Route path="/admin/requests" element={<AdminRequestsPage />} />
         <Route path="/admin/profile" element={<AdminProfilePage />} />
-        <Route path="/admin/support" element={<AdminSupportPage />} />`r`n        <Route path="/admin/users" element={<AdminUsersPage />} />
+        <Route path="/admin/support" element={<AdminSupportPage />} />
+        <Route path="/admin/users" element={<AdminUsersPage />} />
         <Route path="/admin/support/:id" element={<SupportTicketDetailsPage />} />
       </Route>
 
@@ -47,4 +48,3 @@ export default function AppRoutes() {
     </Routes>
   )
 }
-

@@ -1,7 +1,9 @@
-import mongoose from 'mongoose'
+﻿import mongoose from 'mongoose'
 import type { ErrorRequestHandler, RequestHandler } from 'express'
 import { AuthServiceError } from '../services/auth.service.js'
 import { ServiceRequestServiceError } from '../services/service-request.service.js'
+import { SupportTicketServiceError } from '../services/support-ticket.service.js'
+import { AdminUserServiceError } from '../services/admin-user.service.js'
 
 export const notFoundHandler: RequestHandler = (req, res) => {
   res.status(404).json({
@@ -18,7 +20,9 @@ export const errorHandler: ErrorRequestHandler = (
 ) => {
   if (
     error instanceof AuthServiceError ||
-    error instanceof ServiceRequestServiceError
+    error instanceof ServiceRequestServiceError ||
+    error instanceof SupportTicketServiceError ||
+    error instanceof AdminUserServiceError
   ) {
     res.status(error.statusCode).json({
       success: false,
