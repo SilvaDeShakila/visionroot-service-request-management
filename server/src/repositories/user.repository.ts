@@ -30,3 +30,35 @@ export async function incrementTokenVersion(userId: string): Promise<void> {
     { $inc: { tokenVersion: 1 } },
   )
 }
+
+export async function updateUserProfile(
+  userId: string,
+  data: { name: string; email: string },
+): Promise<IUserDocument | null> {
+  return User.findByIdAndUpdate(
+    userId,
+    {
+      $set: {
+        name: data.name,
+        email: data.email,
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+    },
+  ).select('-password +tokenVersion')
+}
+export async function updateUserAvatar(
+  userId: string,
+  avatar: string | null,
+): Promise<IUserDocument | null> {
+  return User.findByIdAndUpdate(
+    userId,
+    { $set: { avatar } },
+    {
+      new: true,
+      runValidators: true,
+    },
+  ).select('-password +tokenVersion')
+}

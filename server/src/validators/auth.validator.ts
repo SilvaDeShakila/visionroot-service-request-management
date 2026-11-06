@@ -49,3 +49,23 @@ export const loginSchema = z
 
 export type RegisterInput = z.infer<typeof registerSchema>
 export type LoginInput = z.infer<typeof loginSchema>
+
+
+export const profileUpdateSchema = z
+  .object({
+    name: z
+      .string()
+      .trim()
+      .min(2, 'Name must contain at least 2 characters')
+      .max(80, 'Name cannot exceed 80 characters'),
+
+    email: z
+      .string()
+      .trim()
+      .email('Please provide a valid email address')
+      .max(254, 'Email cannot exceed 254 characters')
+      .transform((value) => value.toLowerCase()),
+  })
+  .strict()
+
+export type ProfileUpdateInput = z.infer<typeof profileUpdateSchema>

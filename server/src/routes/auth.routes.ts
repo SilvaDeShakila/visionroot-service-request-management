@@ -5,8 +5,12 @@ import {
   login,
   logout,
   register,
+  updateProfile,
+  updateAvatar,
+  updateAvatarPreset,
 } from '../controllers/auth.controller.js'
 import { authenticate } from '../middleware/auth.middleware.js'
+import { avatarUpload } from '../middleware/avatar-upload.middleware.js'
 
 const authRouter = Router()
 
@@ -36,5 +40,9 @@ authRouter.post('/register', registrationLimiter, register)
 authRouter.post('/login', loginLimiter, login)
 authRouter.post('/logout', authenticate, logout)
 authRouter.get('/me', authenticate, getCurrentUser)
+authRouter.put('/profile', authenticate, updateProfile)
+authRouter.post('/avatar', authenticate, avatarUpload, updateAvatar)
+authRouter.put('/avatar/preset', authenticate, updateAvatarPreset)
 
 export default authRouter
+

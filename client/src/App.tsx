@@ -1,10 +1,13 @@
-import { AuthProvider } from './features/auth/auth-context'
+﻿import { AuthProvider } from './features/auth/auth-context'
+import { PreferencesProvider } from './features/preferences/preferences-context'
 import AppRoutes from './routes/AppRoutes'
 
 function App() {
   return (
     <AuthProvider>
-      <AppRoutes />
+      <PreferencesProvider>
+        <AppRoutes />
+      </PreferencesProvider>
     </AuthProvider>
   )
 }

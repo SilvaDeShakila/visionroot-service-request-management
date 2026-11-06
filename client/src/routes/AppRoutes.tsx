@@ -7,6 +7,13 @@ import CreateRequestPage from '../features/requests/pages/CreateRequestPage'
 import RequestDetailsPage from '../features/requests/pages/RequestDetailsPage'
 import EditRequestPage from '../features/requests/pages/EditRequestPage'
 import AdminDashboardPage from '../features/admin/pages/AdminDashboardPage'
+import AdminRequestsPage from '../features/admin/pages/AdminRequestsPage'
+import AdminProfilePage from '../features/admin/pages/AdminProfilePage'
+import ProfilePage from '../features/auth/pages/ProfilePage'
+import PreferencesPage from '../features/preferences/pages/PreferencesPage'
+import SupportCentrePage from '../features/support/pages/SupportCentrePage'
+import SupportTicketDetailsPage from '../features/support/pages/SupportTicketDetailsPage'
+import AdminSupportPage from '../features/admin/pages/AdminSupportPage'
 
 export default function AppRoutes() {
   return (
@@ -21,10 +28,18 @@ export default function AppRoutes() {
         <Route path="/requests/new" element={<CreateRequestPage />} />
         <Route path="/requests/:id" element={<RequestDetailsPage />} />
         <Route path="/requests/:id/edit" element={<EditRequestPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/preferences" element={<PreferencesPage />} />
+        <Route path="/support" element={<SupportCentrePage />} />
+        <Route path="/support/:id" element={<SupportTicketDetailsPage />} />
       </Route>
 
       <Route element={<ProtectedRoute allowedRoles={['ADMIN']} />}>
         <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/requests" element={<AdminRequestsPage />} />
+        <Route path="/admin/profile" element={<AdminProfilePage />} />
+        <Route path="/admin/support" element={<AdminSupportPage />} />
+        <Route path="/admin/support/:id" element={<SupportTicketDetailsPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/login" replace />} />

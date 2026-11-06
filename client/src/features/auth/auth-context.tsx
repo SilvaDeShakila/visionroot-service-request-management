@@ -12,6 +12,7 @@ import type {
 } from './types/auth.types'
 import type {
   LoginData,
+  ProfileUpdateData,
   RegisterData,
 } from './services'
 
@@ -21,6 +22,9 @@ interface AuthContextValue {
   isAuthenticated: boolean
   login: (data: LoginData) => Promise<AuthUser>
   register: (data: RegisterData) => Promise<AuthUser>
+  updateProfile: (data: ProfileUpdateData) => Promise<AuthUser>
+  uploadAvatar: (file: File) => Promise<AuthUser>
+  selectAvatarPreset: (preset: string) => Promise<AuthUser>
   logout: () => Promise<void>
 }
 
@@ -57,6 +61,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return response.data.user
   }
 
+  const updateProfile = async (
+    data: ProfileUpdateData,
+  ): Promise<AuthUser> => {
+    const response = await authService.updateProfile(data)
+    setUser(response.data.user)
+    return response.data.user
+  }
+
+  const uploadAvatar = async (file: File): Promise<AuthUser> => {
+    const response = await authService.uploadAvatar(file)
+    setUser(response.data.user)
+    return response.data.user
+  }
+  const selectAvatarPreset = async (preset: string): Promise<AuthUser> => {
+    const response = await authService.selectAvatarPreset(preset)
+    setUser(response.data.user)
+    return response.data.user
+  }
   const logout = async (): Promise<void> => {
     try {
       await authService.logout()
@@ -73,6 +95,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: user !== null,
         login,
         register,
+        updateProfile,
+        uploadAvatar,
+        selectAvatarPreset,
         logout,
       }}
     >

@@ -18,6 +18,7 @@ export interface AuthUser {
   name: string
   email: string
   role: 'USER' | 'ADMIN'
+  avatar: string | null
 }
 
 export interface AuthResult {
@@ -30,12 +31,14 @@ function toAuthUser(user: {
   name: string
   email: string
   role: 'USER' | 'ADMIN'
+  avatar: string | null
 }): AuthUser {
   return {
     id: user._id.toString(),
     name: user.name,
     email: user.email,
     role: user.role,
+    avatar: user.avatar ?? null,
   }
 }
 
@@ -103,4 +106,38 @@ export async function getCurrentUser(userId: string): Promise<AuthUser> {
 
 export async function revokeUserSessions(userId: string): Promise<void> {
   await userRepository.incrementTokenVersion(userId)
+}
+
+export async function updateCurrentUserProfile(
+  userId: string,
+  input: { name: string; email: string },
+): Promise<AuthUser> {
+  const existingUser = await userRepository.findByEmail(input.email)
+
+  if (existingUser && existingUser._id.toString() !== userId) {
+    throw new AuthServiceError(
+      'This email address is already associated with another account.',
+      409,
+    )
+  }
+
+  const updatedUser = await userRepository.updateUserProfile(userId, input)
+
+  if (!updatedUser) {
+    throw new AuthServiceError('User account was not found.', 404)
+  }
+
+  return toAuthUser(updatedUser)
+}
+export async function updateCurrentUserAvatar(
+  userId: string,
+  avatar: string | null,
+): Promise<AuthUser> {
+  const updatedUser = await userRepository.updateUserAvatar(userId, avatar)
+
+  if (!updatedUser) {
+    throw new AuthServiceError('User account was not found.', 404)
+  }
+
+  return toAuthUser(updatedUser)
 }

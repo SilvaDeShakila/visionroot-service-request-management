@@ -8,3 +8,6 @@ coverage/
 *.log
 .DS_Store
 .vscode/
+
+# Local backup files
+*.backup.tsx

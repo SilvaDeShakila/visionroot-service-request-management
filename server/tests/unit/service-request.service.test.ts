@@ -182,3 +182,78 @@ describe('Service request business logic', () => {
     expect(result.status).toBe('IN_PROGRESS')
     expect(repository.updateStatus).toHaveBeenCalledWith('request-123', 'IN_PROGRESS')
   })})
+
+describe('Additional service request status transition tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('allows ADMIN to resolve an in-progress request', async () => {
+    jest.mocked(repository.findById).mockResolvedValue(
+      mockRequest('IN_PROGRESS') as never,
+    )
+    jest.mocked(repository.updateStatus).mockResolvedValue(
+      mockRequest('RESOLVED') as never,
+    )
+
+    const result = await service.changeRequestStatus(
+      'request-123', 'admin-123', 'ADMIN', 'RESOLVED',
+    )
+
+    expect(result.status).toBe('RESOLVED')
+    expect(repository.updateStatus).toHaveBeenCalledWith(
+      'request-123', 'RESOLVED',
+    )
+  })
+
+  it('allows ADMIN to cancel an in-progress request', async () => {
+    jest.mocked(repository.findById).mockResolvedValue(
+      mockRequest('IN_PROGRESS') as never,
+    )
+    jest.mocked(repository.updateStatus).mockResolvedValue(
+      mockRequest('CANCELLED') as never,
+    )
+
+    const result = await service.changeRequestStatus(
+      'request-123', 'admin-123', 'ADMIN', 'CANCELLED',
+    )
+
+    expect(result.status).toBe('CANCELLED')
+  })
+
+  it('rejects changing a cancelled request back to pending', async () => {
+    jest.mocked(repository.findById).mockResolvedValue(
+      mockRequest('CANCELLED') as never,
+    )
+
+    await expect(
+      service.changeRequestStatus(
+        'request-123', 'admin-123', 'ADMIN', 'PENDING',
+      ),
+    ).rejects.toMatchObject({ statusCode: 400 })
+
+    expect(repository.updateStatus).not.toHaveBeenCalled()
+  })
+
+  it('rejects changing a cancelled request to in progress', async () => {
+    jest.mocked(repository.findById).mockResolvedValue(
+      mockRequest('CANCELLED') as never,
+    )
+
+    await expect(
+      service.changeRequestStatus(
+        'request-123', 'admin-123', 'ADMIN', 'IN_PROGRESS',
+      ),
+    ).rejects.toMatchObject({ statusCode: 400 })
+
+    expect(repository.updateStatus).not.toHaveBeenCalled()
+  })
+
+  it('returns 404 when the requested service request does not exist', async () => {
+    jest.mocked(repository.findById).mockResolvedValue(null)
+
+    await expect(
+      service.getRequest('missing-request', 'admin-123', 'ADMIN'),
+    ).rejects.toMatchObject({ statusCode: 404 })
+  })
+})

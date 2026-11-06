@@ -13,6 +13,11 @@ export interface LoginData {
   password: string
 }
 
+export interface ProfileUpdateData {
+  name: string
+  email: string
+}
+
 export const authService = {
   async register(data: RegisterData): Promise<AuthResponse> {
     const response = await apiClient.post<AuthResponse>(
@@ -36,6 +41,32 @@ export const authService = {
 
   async getCurrentUser(): Promise<AuthResponse> {
     const response = await apiClient.get<AuthResponse>('/auth/me')
+    return response.data
+  },
+
+  async uploadAvatar(file: File): Promise<AuthResponse> {
+    const formData = new FormData()
+    formData.append('avatar', file)
+
+    const response = await apiClient.post<AuthResponse>(
+      '/auth/avatar',
+      formData,
+    )
+
+    return response.data
+  },
+  async selectAvatarPreset(preset: string): Promise<AuthResponse> {
+    const response = await apiClient.put<AuthResponse>(
+      '/auth/avatar/preset',
+      { preset },
+    )
+    return response.data
+  },
+  async updateProfile(data: ProfileUpdateData): Promise<AuthResponse> {
+    const response = await apiClient.put<AuthResponse>(
+      '/auth/profile',
+      data,
+    )
     return response.data
   },
 }

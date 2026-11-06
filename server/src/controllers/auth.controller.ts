@@ -4,6 +4,7 @@ import * as authService from '../services/auth.service.js'
 import {
   loginSchema,
   registerSchema,
+  profileUpdateSchema,
 } from '../validators/auth.validator.js'
 
 const cookieOptions = {
@@ -126,6 +127,140 @@ export async function getCurrentUser(
 
     res.status(200).json({
       success: true,
+      data: { user },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export async function updateProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    if (!req.user) {
+      res.status(401).json({
+        success: false,
+        message: 'Authentication is required.',
+      })
+      return
+    }
+
+    const validation = profileUpdateSchema.safeParse(req.body)
+
+    if (!validation.success) {
+      res.status(400).json({
+        success: false,
+        message: 'Validation failed.',
+        errors: validation.error.flatten().fieldErrors,
+      })
+      return
+    }
+
+    const input = validation.data
+
+    const user = await authService.updateCurrentUserProfile(
+      req.user.id,
+      input,
+    )
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully.',
+      data: { user },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+
+export async function updateAvatar(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    if (!req.user) {
+      res.status(401).json({
+        success: false,
+        message: 'Authentication is required.',
+      })
+      return
+    }
+
+    if (!req.file) {
+      res.status(400).json({
+        success: false,
+        message: 'Please upload a JPG, PNG, or WEBP image (maximum 2 MB).',
+      })
+      return
+    }
+
+    const avatar = `/uploads/avatars/${req.file.filename}`
+
+    const user = await authService.updateCurrentUserAvatar(
+      req.user.id,
+      avatar,
+    )
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile picture updated successfully.',
+      data: { user },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+const allowedAvatarPresets = [
+  'avatar-blue',
+  'avatar-purple',
+  'avatar-green',
+  'avatar-orange',
+] as const
+
+export async function updateAvatarPreset(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    if (!req.user) {
+      res.status(401).json({
+        success: false,
+        message: 'Authentication is required.',
+      })
+      return
+    }
+
+    const { preset } = req.body as { preset?: unknown }
+
+    if (
+      typeof preset !== 'string' ||
+      !allowedAvatarPresets.includes(
+        preset as (typeof allowedAvatarPresets)[number],
+      )
+    ) {
+      res.status(400).json({
+        success: false,
+        message: 'Please select a valid avatar.',
+      })
+      return
+    }
+
+    const user = await authService.updateCurrentUserAvatar(
+      req.user.id,
+      `preset:${preset}`,
+    )
+
+    res.status(200).json({
+      success: true,
+      message: 'Avatar updated successfully.',
       data: { user },
     })
   } catch (error) {
