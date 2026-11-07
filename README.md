@@ -1,4 +1,4 @@
-# VisionRoot – Service Request Management System
+﻿# VisionRoot â€“ Service Request Management System
 
 <p align="center">
   <strong>A Full-Stack Service Request Management Platform</strong>
@@ -17,8 +17,8 @@
 </p>
 
 <p align="center">
-  <a href="docs/api-documentation.md">API Documentation</a> •
-  <a href="docs/database-schema.md">Database Schema</a> •
+  <a href="docs/api-documentation.md">API Documentation</a> â€¢
+  <a href="docs/database-schema.md">Database Schema</a> â€¢
   <a href="#installation-and-setup">Installation Guide</a>
 </p>
 
@@ -42,14 +42,14 @@ Customers can register, submit service requests, track progress, manage eligible
 
 ### Key Highlights
 
-- **User Management** – Registration, authentication, profile management, and role-based access.
-- **Service Requests** – Create, view, edit, cancel, delete eligible requests, and track progress.
-- **Admin Dashboard** – Centralized request management with search, filtering, sorting, and pagination.
-- **Support Centre** – Support tickets with two-way communication between users and administrators.
-- **User Preferences** – Application theme, display density, notification preferences, and accessibility settings.
-- **Admin User Management** – View registered users and manage user roles.
-- **Security** – Protected API endpoints, password hashing, session invalidation, validation, and authorization.
-- **Automated Testing** – Backend unit and integration tests, along with end-to-end workflow verification.
+- **User Management** â€“ Registration, authentication, profile management, and role-based access.
+- **Service Requests** â€“ Create, view, edit, cancel, delete eligible requests, and track progress.
+- **Admin Dashboard** â€“ Centralized request management with search, filtering, sorting, and pagination.
+- **Support Centre** â€“ Support tickets with two-way communication between users and administrators.
+- **User Preferences** â€“ Application theme, display density, notification preferences, and accessibility settings.
+- **Admin User Management** â€“ View registered users and manage user roles.
+- **Security** â€“ Protected API endpoints, password hashing, session invalidation, validation, and authorization.
+- **Automated Testing** â€“ Backend unit and integration tests, along with end-to-end workflow verification.
 
 ## Technology Stack
 
@@ -571,7 +571,7 @@ User preference data is managed through the application's preference functionali
 
 ### User Constraints
 
-- Name is required and must contain 2–80 characters.
+- Name is required and must contain 2â€“80 characters.
 - Email is required, unique, normalized to lowercase, and trimmed.
 - Password is required and stored as a hash.
 - Role is restricted to `USER` or `ADMIN`.
@@ -593,8 +593,8 @@ User preference data is managed through the application's preference functionali
 
 ### Service Request Constraints
 
-- Title is required and must contain 5–120 characters.
-- Description is required and must contain 10–2000 characters.
+- Title is required and must contain 5â€“120 characters.
+- Description is required and must contain 10â€“2000 characters.
 - Category must be one of the supported categories.
 - Priority must be `LOW`, `MEDIUM`, or `HIGH`.
 - Status must be one of the supported statuses.
@@ -1003,8 +1003,8 @@ Install the following:
 ## 12.2 Clone the Repository
 
 ```bash
-git clone https://github.com/SilvaDeShakila/visionroot-service-request-management.git
-cd visionroot-service-request-management
+git clone https://github.com/SilvaDeShakila/visionroot-software-engineering-assignment.git
+cd visionroot-software-engineering-assignment
 ```
 
 ## 12.3 Install Backend Dependencies
@@ -1550,4 +1550,5 @@ These are potential future improvements and are not claimed as completed functio
 The VisionRoot Service Request Management System demonstrates full-stack application development, REST API design, database integration, authentication, authorization, input validation, business rule enforcement, automated testing, and technical documentation.
 
 The application was developed with a focus on modular architecture, maintainable code organization, secure request handling, and a practical user experience.
+
 
